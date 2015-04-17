@@ -65,11 +65,18 @@ namespace ColdFlame
             return genID;
         }
 
-        public List<Component> getEntity(int eID)
+        public List<Component> getComponents(int entity)
         {
-            List<Component> value;
-            _entityList.TryGetValue(eID, out value);
-            return value;
+            List<Component> components;
+            _entityList.TryGetValue(entity, out components);
+            return components;
+        }
+
+        public Component getComponent(int entity, Type comType)
+        {
+            List<Component> components;
+            _entityList.TryGetValue(entity, out components);
+            return components[0];
         }
 
         public List<int> getEntityList()
@@ -92,5 +99,6 @@ namespace ColdFlame
             }
             return false;
         }
+
     }
 }

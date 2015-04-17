@@ -5,11 +5,17 @@ namespace ColdFlame
 {
     public class Sprite : Component
     {
-        public Sprite sprite { get; set; }
+        public SFML.Graphics.Sprite sprite;
 
         public Sprite(string path)
         {
-            throw new NotImplementedException();
+            sprite = new SFML.Graphics.Sprite(new Texture(@path));
         }
+
+        public Sprite(string path, IntRect rect)
+        {
+            sprite = new SFML.Graphics.Sprite(new Texture(@path, rect));
+        }
+
     }
 }
