@@ -1,5 +1,6 @@
 ﻿using SFML.Graphics;
 using SFML.Window;
+using System;
 
 namespace ColdFlame
 {
@@ -12,6 +13,11 @@ namespace ColdFlame
             _window.SetVisible(true);
             _window.Closed += delegate { _window.Close(); };
 
+            EntityManager entityManager = new EntityManager();
+            RenderSystem rs = new RenderSystem(entityManager);
+
+            entityManager.createEntity();
+
             while (_window.IsOpen)
             {
                 _window.DispatchEvents();
@@ -23,11 +29,13 @@ namespace ColdFlame
         //Draws game objects
         void Draw()
         {
+            throw new NotImplementedException();
         }
 
         //Updates game logic - called before Draw()
         void Update()
         {
+            throw new NotImplementedException();
         }
     }
 }

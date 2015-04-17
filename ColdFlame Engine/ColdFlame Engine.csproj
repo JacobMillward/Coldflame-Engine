@@ -113,6 +113,7 @@
   <ItemGroup>
     <Compile Include="Component.cs" />
     <Compile Include="EntityManager.cs" />
+    <Compile Include="EntityEventPayload.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />

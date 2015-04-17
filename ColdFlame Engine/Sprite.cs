@@ -1,4 +1,5 @@
 using SFML.Graphics;
+using System;
 
 namespace ColdFlame
 {
@@ -8,7 +9,7 @@ namespace ColdFlame
 
         public Sprite(string path)
         {
-            //this.setSprite(new Image(path));
+            throw new NotImplementedException();
         }
     }
 }

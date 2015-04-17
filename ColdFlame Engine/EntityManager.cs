@@ -8,14 +8,14 @@ namespace ColdFlame
     public class EntityManager
     {
 
+        public delegate void EntityEventHandler(int entity);
+        public EntityEventHandler EntityEvent;
         private Dictionary<int, List<Component>> _entityList;
-        private List<GameSystem> _gameSystems;
         private int lowestEID { get; set; }
 
         public EntityManager()
         {
             _entityList = new Dictionary<int, List<Component>>();
-            _gameSystems = new List<GameSystem>();
         }
 
         private int generateNewEID()
@@ -40,17 +40,20 @@ namespace ColdFlame
             List<Component> value;
             _entityList.TryGetValue(entity, out value);
             value.Add(component);
+            EntityEvent(entity);
         }
 
         public void addComponent(int entity, List<Component> componentList)
         {
-            //TODO: Implement this
+            EntityEvent(entity);
+            throw new NotImplementedException();
         }
 
         public int createEntity(List<Component> componentList)
         {
             int genID = generateNewEID();
             _entityList.Add(genID, componentList);
+            EntityEvent(genID);
             return genID;
         }
 
@@ -58,6 +61,7 @@ namespace ColdFlame
         {
             int genID = generateNewEID();
             _entityList.Add(genID, new List<Component>());
+            EntityEvent(genID);
             return genID;
         }
 
@@ -85,9 +89,8 @@ namespace ColdFlame
                         return true;
                     }
                 }
-                return false;
             }
-            else return false;
+            return false;
         }
     }
 }

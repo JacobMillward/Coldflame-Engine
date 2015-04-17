@@ -6,7 +6,6 @@ namespace ColdFlame
 
     public abstract class GameSystem
     {
-
         protected EntityManager entityManager;
         protected List<int> actionableEntities;
         protected List<Type> actionableComponents;
@@ -14,32 +13,30 @@ namespace ColdFlame
         public GameSystem(EntityManager entityManager)
         {
             this.entityManager = entityManager;
+            entityManager.EntityEvent += new EntityManager.EntityEventHandler(OnNotify);
             actionableComponents = new List<Type>();
             List<int> actionableEntities = new List<int>();
         }
 
-        protected void gatherActionableEntities() {
-		List<int> allEntities = entityManager.getEntityList();
-		foreach(int entity in allEntities) {
-			int componentsMatched = 0;
+        protected virtual void OnNotify(int entity)
+        {
+            Console.WriteLine("{0} Recieved EntityEvent from {1}", typeof(GameSystem).FullName, entity.ToString());
 
-			foreach (Type t in actionableComponents)
+            int componentsMatched = 0;
+            foreach (Type t in actionableComponents)
             {
-				if (entityManager.containsComponent(entity, t))
+                if (entityManager.containsComponent(entity, t))
                 {
-					componentsMatched++;
-				}
-			}
+                    componentsMatched++;
+                }
+            }
 
-			if (componentsMatched == actionableComponents.Count)
+            if (componentsMatched == actionableComponents.Count)
             {
-				actionableEntities.Add(entity);
-			}
-		}
-		
-	}
+                actionableEntities.Add(entity);
+            }
+        }
 
         public abstract void Update();
-
     }
 }

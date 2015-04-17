@@ -15,7 +15,7 @@ namespace ColdFlame
         {
             foreach (int e in actionableEntities)
             {
-                //Render entity here using drawing library
+
             }
         }
     }
