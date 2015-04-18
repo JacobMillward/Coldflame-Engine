@@ -1,19 +1,29 @@
 using SFML.Graphics;
+using SFML.Window;
+using SFML.System;
 
 namespace ColdFlame
 {
 
     public class RenderSystem : GameSystem
     {
-        RenderWindow _window;
-        public RenderSystem(EntityManager entityManager, RenderWindow window) : base(entityManager) {
+        private RenderWindow _window;
+
+        public RenderSystem(EntityManager entityManager, Vector2u screenDimensions): base(entityManager) {
             actionableComponents.Add(typeof(Position));
             actionableComponents.Add(typeof(Sprite));
-            _window = window;
+
+            if (screenDimensions == null) screenDimensions = new Vector2u(800, 600);
+            _window = new RenderWindow(new VideoMode(screenDimensions.X, screenDimensions.Y), "SFML window");
+            _window.Closed += delegate { Game.running = false; _window.Close(); };
+            _window.SetVisible(true);
+
         }
 
         public override void Update()
         {
+            _window.DispatchEvents();
+            _window.Clear(Color.Cyan);
             foreach (int e in actionableEntities)
             {
                 Sprite s = (Sprite) entityManager.getComponent(e, typeof(Sprite));
@@ -22,6 +32,7 @@ namespace ColdFlame
 
                 _window.Draw(s.sprite);
             }
+            _window.Display();
         }
     }
 }

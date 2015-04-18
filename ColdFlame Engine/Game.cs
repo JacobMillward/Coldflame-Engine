@@ -1,38 +1,37 @@
 ﻿using SFML.Graphics;
-using SFML.Window;
-using System;
-using System.Threading;
+using System.Collections.Generic;
 
 namespace ColdFlame
 {
     class Game
     {
-        private RenderWindow _window;
+
+        public static bool running { get; set; }
+        List<GameSystem> SystemList = new List<GameSystem>();
+        EntityManager entityManager;
 
         public void Start()
         {
-            Thread oThread = new Thread(new ThreadStart(this.WindowThread));
-            oThread.Start();
-            while (!oThread.IsAlive) ;
+            entityManager = new EntityManager();
+            SystemList.Add(new RenderSystem(entityManager, new SFML.System.Vector2u(800,600)));
 
-            EntityManager entityManager = new EntityManager();
-            RenderSystem rs = new RenderSystem(entityManager, _window);
+            int playerHandle = entityManager.createEntity();
+            entityManager.addComponent(playerHandle, new Position(0, 0));
+            entityManager.addComponent(playerHandle, new Sprite(@"player.png", new IntRect(0,0,24,25)));
 
-            entityManager.createEntity();
+            Game.running = true;
+            while(Game.running)
+            {
+                foreach(GameSystem system in SystemList)
+                {
+                    system.Update();
+                }
+            }
         }
 
         public void WindowThread()
         {
-            _window = new RenderWindow(new VideoMode(800, 600), "SFML window");
-            _window.Closed += delegate { _window.Close(); };
-            _window.SetVisible(true);
-
-            while (_window.IsOpen)
-            {
-                _window.DispatchEvents();
-                _window.Clear(Color.Cyan);
-                _window.Display();
-            }
+           
         }
     }
 }

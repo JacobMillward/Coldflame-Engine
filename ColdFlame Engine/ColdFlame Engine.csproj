@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{DEFD4AF7-3F6A-45BA-B340-843C17F471B7}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ColdFlame</RootNamespace>
     <AssemblyName>ColdFlame Engine</AssemblyName>
@@ -109,6 +109,9 @@
     <Content Include="openal32.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="player.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Component.cs" />
@@ -116,6 +119,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="Position.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="RectCollider.cs" />
     <Compile Include="RenderSystem.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="GameSystem.cs" />
