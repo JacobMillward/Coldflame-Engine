@@ -6,25 +6,23 @@ namespace ColdFlame
 
     public abstract class GameSystem
     {
-        protected EntityManager entityManager;
-        public List<int> actionableEntities = new List<int>();
+        public List<Entity> actionableEntities = new List<Entity>();
         protected List<Type> actionableComponents = new List<Type>();
 
-        public GameSystem(EntityManager entityManager)
+        public GameSystem()
         {
-            this.entityManager = entityManager;
-            entityManager.EntityEvent += new EntityManager.EntityEventHandler(OnNotify);
+            EntityManager.EntityEvent += new EntityManager.EntityEventHandler(OnNotify);
             
         }
 
-        protected virtual void OnNotify(int entity, string value)
+        protected virtual void OnNotify(Entity e, string value)
         {
-            Console.WriteLine("{0} Recieved {1} event from {2}", typeof(GameSystem).FullName, value, entity.ToString());
+            Console.WriteLine("{0} Recieved {1} event from {2}", this.GetType().FullName, value, e.ToString());
 
             int componentsMatched = 0;
-            foreach (Type t in actionableComponents)
+            foreach (Type type in actionableComponents)
             {
-                if (entityManager.containsComponent(entity, t))
+                if (e.ContainsComponent(type))
                 {
                     componentsMatched++;
                 }
@@ -32,7 +30,7 @@ namespace ColdFlame
 
             if (componentsMatched == actionableComponents.Count)
             {
-                actionableEntities.Add(entity);
+                actionableEntities.Add(e);
             }
         }
 

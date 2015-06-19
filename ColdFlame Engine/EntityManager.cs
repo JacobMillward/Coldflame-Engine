@@ -5,24 +5,19 @@ using System.Linq;
 namespace ColdFlame
 {
 
-    public class EntityManager
+    static class EntityManager
     {
 
-        public delegate void EntityEventHandler(int entity);
-        public EntityEventHandler EntityEvent;
-        private Dictionary<int, List<Component>> _entityList;
-        private int lowestEID { get; set; }
+        public delegate void EntityEventHandler(Entity entity, string eventType);
+        public static EntityEventHandler EntityEvent;
+        private static Dictionary<int, List<Component>> _entityList = new Dictionary<int, List<Component>>();
+        private static int lowestUUID { get; set; }
 
-        public EntityManager()
+        public static int generateUUID()
         {
-            _entityList = new Dictionary<int, List<Component>>();
-        }
-
-        private int generateNewEID()
-        {
-            if (lowestEID < int.MaxValue)
+            if (lowestUUID < int.MaxValue)
             {
-                return lowestEID++;
+                return lowestUUID ++;
             }
             for (int i = 0; i < int.MaxValue; i++)
             {
@@ -32,62 +27,59 @@ namespace ColdFlame
                     return i;
                 }
             }
-            throw new Exception("Cannot create new EID");
+            throw new Exception("Cannot create new UUID");
         }
 
-        public void addComponent(int entity, Component component)
+        public static void addComponent(int entityUUID, Component component)
         {
             List<Component> value;
-            _entityList.TryGetValue(entity, out value);
+            _entityList.TryGetValue(entityUUID, out value);
             value.Add(component);
-            EntityEvent(entity);
+            EntityEvent(new Entity(entityUUID), "New Component");
         }
 
-        public void addComponent(int entity, List<Component> componentList)
+        public static void addComponent(int entityUUID, List<Component> componentList)
         {
-            EntityEvent(entity);
+            EntityEvent(new Entity(entityUUID), "New Component");
             throw new NotImplementedException();
         }
 
-        public int createEntity(List<Component> componentList)
+        public static void addEntity(Entity entity)
         {
-            int genID = generateNewEID();
-            _entityList.Add(genID, componentList);
-            EntityEvent(genID);
-            return genID;
+            _entityList.Add(entity.uuid, new List<Component>());
+            EntityEvent(entity, "New Entity");
         }
 
-        public int createEntity()
-        {
-            int genID = generateNewEID();
-            _entityList.Add(genID, new List<Component>());
-            EntityEvent(genID);
-            return genID;
-        }
-
-        public List<Component> getComponents(int entity)
+        public static List<Component> getComponents(int entityUUID)
         {
             List<Component> components;
-            _entityList.TryGetValue(entity, out components);
+            _entityList.TryGetValue(entityUUID, out components);
             return components;
         }
 
-        public Component getComponent(int entity, Type comType)
+        public static Component getComponent(int entityUUID, Type comType)
         {
             List<Component> components;
-            _entityList.TryGetValue(entity, out components);
+            _entityList.TryGetValue(entityUUID, out components);
+            foreach (Component item in components)
+            {
+                if (item.GetType().Equals(comType))
+                {
+                    return item;
+                }
+            }
             return components[0];
         }
 
-        public List<int> getEntityList()
+        public static List<int> getEntityList()
         {
             return _entityList.Keys.ToList<int>();
         }
 
-        public bool containsComponent(int entity, Type comType)
+        public static bool containsComponent(int entityUUID, Type comType)
         {
             List<Component> componentList;
-            if (_entityList.TryGetValue(entity, out componentList))
+            if (_entityList.TryGetValue(entityUUID, out componentList))
             {
                 foreach (Component c in componentList)
                 {
@@ -99,6 +91,5 @@ namespace ColdFlame
             }
             return false;
         }
-
     }
 }

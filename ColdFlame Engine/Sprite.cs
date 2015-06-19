@@ -7,6 +7,11 @@ namespace ColdFlame
     {
         public SFML.Graphics.Sprite sprite;
 
+        public Sprite()
+        {
+            sprite = new SFML.Graphics.Sprite();
+        }
+
         public Sprite(string path)
         {
             sprite = new SFML.Graphics.Sprite(new Texture(@path));
@@ -17,5 +22,9 @@ namespace ColdFlame
             sprite = new SFML.Graphics.Sprite(new Texture(@path, rect));
         }
 
+        public Sprite(SFML.Graphics.Sprite sfmlSprite)
+        {
+            this.sprite = sfmlSprite;
+        }
     }
 }

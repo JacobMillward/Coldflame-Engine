@@ -3,21 +3,21 @@ using System.Collections.Generic;
 
 namespace ColdFlame
 {
-    class Game
+    public class Game
     {
 
         public static bool running { get; set; }
         List<GameSystem> SystemList = new List<GameSystem>();
-        EntityManager entityManager;
 
         public void Start()
         {
-            entityManager = new EntityManager();
-            SystemList.Add(new RenderSystem(entityManager, new SFML.System.Vector2u(800,600)));
+            SystemList.Add(new RenderSystem(new SFML.System.Vector2u(800,600)));
+            SystemList.Add(new AnimationSystem());
 
-            int playerHandle = entityManager.createEntity();
-            entityManager.addComponent(playerHandle, new Position(0, 0));
-            entityManager.addComponent(playerHandle, new Sprite(@"player.png", new IntRect(0,0,24,25)));
+            Entity player = new Entity();
+            player.AddComponent(new Position(0, 0));
+            player.AddComponent(new Sprite(@"player.png"));
+            player.AddComponent(new Animation(@"player.png", 24, 25, 6));
 
             Game.running = true;
             while(Game.running)
@@ -27,11 +27,6 @@ namespace ColdFlame
                     system.Update();
                 }
             }
-        }
-
-        public void WindowThread()
-        {
-           
         }
     }
 }
