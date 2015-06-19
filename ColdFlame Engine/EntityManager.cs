@@ -10,57 +10,44 @@ namespace ColdFlame
 
         public delegate void EntityEventHandler(Entity entity, string eventType);
         public static EntityEventHandler EntityEvent;
-        private static Dictionary<int, List<Component>> _entityList = new Dictionary<int, List<Component>>();
-        private static int lowestUUID { get; set; }
+        private static Dictionary<Guid, List<Component>> _entityList = new Dictionary<Guid, List<Component>>();
 
-        public static int generateUUID()
+        public static Guid generateGUID()
         {
-            if (lowestUUID < int.MaxValue)
-            {
-                return lowestUUID ++;
-            }
-            for (int i = 0; i < int.MaxValue; i++)
-            {
-                List<Component> value;
-                if (!_entityList.TryGetValue(i, out value))
-                {
-                    return i;
-                }
-            }
-            throw new Exception("Cannot create new UUID");
+            return Guid.NewGuid();
         }
 
-        public static void addComponent(int entityUUID, Component component)
+        public static void addComponent(Guid entityGUID, Component component)
         {
             List<Component> value;
-            _entityList.TryGetValue(entityUUID, out value);
+            _entityList.TryGetValue(entityGUID, out value);
             value.Add(component);
-            EntityEvent(new Entity(entityUUID), "New Component");
+            EntityEvent(new Entity(entityGUID), "New Component");
         }
 
-        public static void addComponent(int entityUUID, List<Component> componentList)
+        public static void addComponent(Guid entityGUID, List<Component> componentList)
         {
-            EntityEvent(new Entity(entityUUID), "New Component");
+            EntityEvent(new Entity(entityGUID), "New Component");
             throw new NotImplementedException();
         }
 
         public static void addEntity(Entity entity)
         {
-            _entityList.Add(entity.uuid, new List<Component>());
+            _entityList.Add(entity.guid, new List<Component>());
             EntityEvent(entity, "New Entity");
         }
 
-        public static List<Component> getComponents(int entityUUID)
+        public static List<Component> getComponents(Guid entityGUID)
         {
             List<Component> components;
-            _entityList.TryGetValue(entityUUID, out components);
+            _entityList.TryGetValue(entityGUID, out components);
             return components;
         }
 
-        public static Component getComponent(int entityUUID, Type comType)
+        public static Component getComponent(Guid entityGUID, Type comType)
         {
             List<Component> components;
-            _entityList.TryGetValue(entityUUID, out components);
+            _entityList.TryGetValue(entityGUID, out components);
             foreach (Component item in components)
             {
                 if (item.GetType().Equals(comType))
@@ -71,15 +58,15 @@ namespace ColdFlame
             return components[0];
         }
 
-        public static List<int> getEntityList()
+        public static List<Guid> getEntityList()
         {
-            return _entityList.Keys.ToList<int>();
+            return _entityList.Keys.ToList<Guid>();
         }
 
-        public static bool containsComponent(int entityUUID, Type comType)
+        public static bool containsComponent(Guid entityGUID, Type comType)
         {
             List<Component> componentList;
-            if (_entityList.TryGetValue(entityUUID, out componentList))
+            if (_entityList.TryGetValue(entityGUID, out componentList))
             {
                 foreach (Component c in componentList)
                 {

@@ -4,38 +4,38 @@ namespace ColdFlame
 {
     public class Entity
     {
-        public int uuid { get; private set; }
+        public Guid guid { get; private set; }
 
         public Entity()
         {
-            this.uuid = EntityManager.generateUUID();
+            this.guid = EntityManager.generateGUID();
             EntityManager.addEntity(this);
         }
 
-        public Entity(int uuid)
+        public Entity(Guid guid)
         {
-            this.uuid = uuid;
+            this.guid = guid;
         }
 
         public void AddComponent(Component component)
         {
-            EntityManager.addComponent(uuid, component);
+            EntityManager.addComponent(guid, component);
         }
 
         public T GetComponent<T>() where T:Component
         {
-            return (T)EntityManager.getComponent(uuid, typeof(T));
+            return (T)EntityManager.getComponent(guid, typeof(T));
         }
 
         public bool ContainsComponent(Type type)
         {
-            return EntityManager.containsComponent(uuid, type);
+            return EntityManager.containsComponent(guid, type);
         }
 
         public override string ToString()
         {
-            string str = "Entity#" + uuid + "<";
-            var list = EntityManager.getComponents(uuid);
+            string str = "Entity#" + guid.ToString() + "<";
+            var list = EntityManager.getComponents(guid);
             foreach (Component c in list)
             {
                 str += c.GetType().FullName;
