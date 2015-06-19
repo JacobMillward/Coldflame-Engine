@@ -142,6 +142,8 @@ publish/
 !**/packages/build/
 # Uncomment if necessary however generally it will be regenerated when needed
 #!**/packages/repositories.config
+# Ignore packages.config as dependancies are installed by the user
+**packages.config
 
 # Windows Azure Build Output
 csx/
