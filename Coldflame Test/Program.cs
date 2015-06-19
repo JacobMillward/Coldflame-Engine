@@ -1,4 +1,6 @@
-﻿namespace ColdFlame
+﻿using System;
+
+namespace Coldflame_Test
 {
     class Program
     {

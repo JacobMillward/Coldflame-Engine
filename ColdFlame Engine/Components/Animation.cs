@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace ColdFlame
 {
-    class Animation : Component
+    public class Animation : Component
     {
         public List<Sprite> spriteList;
         public int currentIndex = 0;

@@ -1,7 +1,7 @@
 ﻿
 namespace ColdFlame
 {
-    class RectCollider : Component
+    public class RectCollider : Component
     {
         public float height { get; set; }
         public float width { get; set; }

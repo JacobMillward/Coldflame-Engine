@@ -14,7 +14,7 @@ namespace ColdFlame
             actionableComponents.Add(typeof(Sprite));
 
             _window = new RenderWindow(new VideoMode(screenDimensions.X, screenDimensions.Y), "SFML window");
-            _window.Closed += delegate { Game.running = false; _window.Close(); };
+            _window.Closed += delegate { GameBase.running = false; _window.Close(); };
             _window.SetVisible(true);
 
         }
