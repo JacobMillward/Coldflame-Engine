@@ -16,7 +16,22 @@ namespace ColdFlame
             {
                 Sprite s = e.GetComponent<Sprite>();
                 Animation a = e.GetComponent<Animation>();
-                s = a.spriteList[0];
+                if ((a.clock.ElapsedTime.AsSeconds() > (1/a.frameRate) || a.firstRun) && a.play)
+                {
+                    a.firstRun = false;
+                    int frameCount = a.spriteList.Count;
+                    if (a.currentFrame < frameCount - 1)
+                    {
+                        a.currentFrame++;
+                    }
+                    else
+                    {
+                        a.currentFrame = 0;
+                    }
+                    s.image = a.spriteList[a.currentFrame];
+                    a.clock.Restart();
+                }
+                
             }
         }
     }
