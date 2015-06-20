@@ -2,17 +2,20 @@
 
 namespace Coldflame_Test
 {
-    class Game : ColdFlame.GameBase
+    class Game : GameBase
     {
         protected override void Initialise()
         {
-            SystemList.Add(new RenderSystem(new SFML.System.Vector2u(800, 600)));
+            RenderSystem rs = new RenderSystem(new SFML.System.Vector2u(800, 600), new SFML.Graphics.Font(@"Arial.ttf"));
+            rs.setDebug();
+            SystemList.Add(rs);
             SystemList.Add(new AnimationSystem());
+            
 
             Entity player = new Entity();
             player.AddComponent(new Position(0, 0));
-            player.AddComponent(new Sprite(@"player.png"));
-            player.AddComponent(new Animation(@"player.png", 24, 25, 6));
+            player.AddComponent(new Sprite());
+            player.AddComponent(new Animation(@"player.png", 25, 25, 6, frameRate: 5f));
         }
     }
 }
