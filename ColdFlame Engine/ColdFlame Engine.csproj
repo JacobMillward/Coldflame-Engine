@@ -105,6 +105,7 @@
     <Compile Include="GameSystems\RenderSystem.cs" />
     <Compile Include="Components\Sprite.cs" />
     <Compile Include="GameSystem.cs" />
+    <Compile Include="SystemManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">

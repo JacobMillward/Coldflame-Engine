@@ -8,11 +8,14 @@ namespace ColdFlame
     {
         public List<Entity> actionableEntities = new List<Entity>();
         protected List<Type> actionableComponents = new List<Type>();
+        public virtual bool isUnique { get; } = false;
+        public virtual int priority { get; } = 10;
 
         public GameSystem()
         {
             EntityManager.EntityEvent += new EntityManager.EntityEventHandler(OnNotify);
-            
+            SystemManager.Add(this);
+            Console.WriteLine("Added {0} to SystemMananger", this.GetType().FullName);
         }
 
         protected virtual void OnNotify(Entity e, string value)

@@ -7,7 +7,6 @@ namespace ColdFlame
     {
 
         public static bool running { get; set; }
-        protected List<GameSystem> SystemList = new List<GameSystem>();
 
         protected virtual void Initialise() { }
 
@@ -17,10 +16,7 @@ namespace ColdFlame
             GameBase.running = true;
             while(GameBase.running)
             {
-                foreach(GameSystem system in SystemList)
-                {
-                    system.Update();
-                }
+                SystemManager.doSystemUpdates();
             }
         }
     }

@@ -27,8 +27,13 @@ namespace ColdFlame
 
         public static void addComponent(Guid entityGUID, List<Component> componentList)
         {
+            List<Component> value;
+            _entityList.TryGetValue(entityGUID, out value);
+            foreach(Component component in componentList)
+            {
+                value.Add(component);
+            }
             EntityEvent(new Entity(entityGUID), "New Component");
-            throw new NotImplementedException();
         }
 
         public static void addEntity(Entity entity)
