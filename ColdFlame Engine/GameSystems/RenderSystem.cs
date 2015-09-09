@@ -10,20 +10,19 @@ namespace ColdFlame
     {
         private RenderWindow _window;
         private bool debugMode = false;
-        private Font debugFont;
+        private Font debugFont = new Font(@"C:\Windows\Fonts\arial.ttf");
         private Text debugText;
         private Clock clock = new Clock();
         private int frameCount;
 
-        public RenderSystem(Vector2u screenDimensions, Font font = null): base() {
+        public RenderSystem(Vector2u screenDimensions) : base() {
             actionableComponents.Add(typeof(Position));
             actionableComponents.Add(typeof(Sprite));
 
             _window = new RenderWindow(new VideoMode(screenDimensions.X, screenDimensions.Y), "SFML window", Styles.Close);
             _window.Closed += delegate { GameBase.running = false; _window.Close(); };
             _window.SetVisible(true);
-            debugFont = font;
-            debugText = new Text("FPS: 0", font, 24);
+            debugText = new Text("FPS: 0", debugFont, 24);
             debugText.Position = new Vector2f(_window.GetViewport(_window.GetView()).Width - debugText.GetLocalBounds().Width - 10, 0f);
             debugText.Color = Color.Black;
             debugText.CharacterSize = 16;
@@ -57,9 +56,9 @@ namespace ColdFlame
             _window.Display();
         }
 
-        public void setDebug(bool enable = true)
+        public void setDebug(bool value = true)
         {
-            debugMode = enable;
+            debugMode = value;
         }
     }
 }

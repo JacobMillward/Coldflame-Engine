@@ -6,7 +6,7 @@ namespace Coldflame_Test
     {
         protected override void Initialise()
         {
-            RenderSystem rs = new RenderSystem(new SFML.System.Vector2u(800, 600), new SFML.Graphics.Font(@"Arial.ttf"));
+            RenderSystem rs = new RenderSystem(new SFML.System.Vector2u(800, 600));
             rs.setDebug();
             SystemList.Add(rs);
             SystemList.Add(new AnimationSystem());
