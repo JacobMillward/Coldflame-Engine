@@ -46,7 +46,7 @@
     <Compile Include="Component.cs" />
     <Compile Include="Components\Animation.cs" />
     <Compile Include="Components\Position.cs" />
-    <Compile Include="Components\RectCollider.cs" />
+    <Compile Include="Components\PolyCollider.cs" />
     <Compile Include="Components\Sprite.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityManager.cs" />

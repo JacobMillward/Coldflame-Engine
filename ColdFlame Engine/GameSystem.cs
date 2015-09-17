@@ -20,8 +20,6 @@ namespace ColdFlame
 
         protected virtual void OnNotify(Entity e, string value)
         {
-            Console.WriteLine("{0} Recieved {1} event from {2}", this.GetType().FullName, value, e.ToString());
-
             int componentsMatched = 0;
             foreach (Type type in actionableComponents)
             {
@@ -34,6 +32,7 @@ namespace ColdFlame
             if (componentsMatched == actionableComponents.Count)
             {
                 actionableEntities.Add(e);
+                Console.WriteLine("{0} Added {1} to actionable entities", this.GetType().FullName, e.ToString());
             }
         }
 
