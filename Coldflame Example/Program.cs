@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Coldflame_Test
+namespace Coldflame_Example
 {
     class Program
     {

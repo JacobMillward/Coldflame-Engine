@@ -1,6 +1,6 @@
 ﻿using ColdFlame;
 
-namespace Coldflame_Test
+namespace Coldflame_Example
 {
     class Game : GameBase
     {
