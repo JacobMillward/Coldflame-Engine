@@ -4,8 +4,6 @@ namespace ColdFlame
 {
     public class AnimationSystem : GameSystem
     {
-        public override int priority { get; } = 1;
-
         public AnimationSystem() : base ()
         {
             actionableComponents.Add(typeof(Sprite));
@@ -33,7 +31,6 @@ namespace ColdFlame
                     s.image = a.spriteList[a.currentFrame];
                     a.clock.Restart();
                 }
-                
             }
         }
     }

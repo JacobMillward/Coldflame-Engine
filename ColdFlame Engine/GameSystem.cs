@@ -9,7 +9,7 @@ namespace ColdFlame
         public List<Entity> actionableEntities = new List<Entity>();
         protected List<Type> actionableComponents = new List<Type>();
         public virtual bool isUnique { get; } = false;
-        public virtual int priority { get; } = 10;
+        public virtual int priority { get; } = 0;
 
         public GameSystem()
         {

@@ -15,7 +15,7 @@ namespace ColdFlame
         private Clock clock = new Clock();
         private int frameCount;
         public override bool isUnique { get; } = true;
-        public override int priority { get; } = 0;
+        public override int priority { get; } = 20;
 
         public RenderSystem(Vector2u screenDimensions) : base() {
             actionableComponents.Add(typeof(Position));
