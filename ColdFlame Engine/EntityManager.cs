@@ -12,12 +12,12 @@ namespace ColdFlame
         public static EntityEventHandler EntityEvent;
         private static Dictionary<Guid, List<Component>> _entityList = new Dictionary<Guid, List<Component>>();
 
-        public static Guid generateGUID()
+        internal static Guid generateGUID()
         {
             return Guid.NewGuid();
         }
 
-        public static void addComponent(Guid entityGUID, Component component)
+        internal static void addComponent(Guid entityGUID, Component component)
         {
             List<Component> value;
             _entityList.TryGetValue(entityGUID, out value);
@@ -25,7 +25,7 @@ namespace ColdFlame
             EntityEvent(new Entity(entityGUID), "New Component");
         }
 
-        public static void addComponent(Guid entityGUID, List<Component> componentList)
+        internal static void addComponent(Guid entityGUID, List<Component> componentList)
         {
             List<Component> value;
             _entityList.TryGetValue(entityGUID, out value);
@@ -36,20 +36,20 @@ namespace ColdFlame
             EntityEvent(new Entity(entityGUID), "New Component");
         }
 
-        public static void addEntity(Entity entity)
+        internal static void addEntity(Entity entity)
         {
             _entityList.Add(entity.guid, new List<Component>());
             EntityEvent(entity, "New Entity");
         }
 
-        public static List<Component> getComponents(Guid entityGUID)
+        internal static List<Component> getComponents(Guid entityGUID)
         {
             List<Component> components;
             _entityList.TryGetValue(entityGUID, out components);
             return components;
         }
 
-        public static List<Component> getComponents(Guid entityGUID, Type comType)
+        internal static List<Component> getComponents(Guid entityGUID, Type comType)
         {
             List<Component> components;
             List<Component> matchedComponents = new List<Component>();
@@ -64,7 +64,7 @@ namespace ColdFlame
             return matchedComponents;
         }
 
-        public static Component getComponent(Guid entityGUID, Type comType)
+        internal static Component getComponent(Guid entityGUID, Type comType)
         {
             List<Component> components;
             _entityList.TryGetValue(entityGUID, out components);
@@ -78,12 +78,12 @@ namespace ColdFlame
             return components[0];
         }
 
-        public static List<Guid> getEntityList()
+        internal static List<Guid> getEntityList()
         {
             return _entityList.Keys.ToList<Guid>();
         }
 
-        public static bool containsComponent(Guid entityGUID, Type comType)
+        internal static bool containsComponent(Guid entityGUID, Type comType)
         {
             List<Component> componentList;
             if (_entityList.TryGetValue(entityGUID, out componentList))

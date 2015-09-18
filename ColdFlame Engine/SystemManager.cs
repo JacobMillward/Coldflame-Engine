@@ -8,7 +8,7 @@ namespace ColdFlame
         private static List<GameSystem> systemList = new List<GameSystem>();
         static SystemManager() { }
 
-        public static void Add(GameSystem system)
+        internal static void Add(GameSystem system)
         {
             if (system.isUnique)
             {
@@ -32,7 +32,7 @@ namespace ColdFlame
 
         }
 
-        public static void Remove(GameSystem system)
+        internal static void Remove(GameSystem system)
         {
             systemList.Remove(system);
         }
