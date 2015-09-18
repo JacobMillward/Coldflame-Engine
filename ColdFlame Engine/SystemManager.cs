@@ -20,7 +20,16 @@ namespace ColdFlame
                     }
                 }
             }
-            systemList.Insert(system.priority, system);
+            foreach(GameSystem s in systemList)
+            {
+                if (system.priority <= s.priority)
+                {
+                    systemList.Insert(systemList.IndexOf(s), system);
+                    return;
+                }
+            }
+            systemList.Add(system);
+
         }
 
         public static void Remove(GameSystem system)
