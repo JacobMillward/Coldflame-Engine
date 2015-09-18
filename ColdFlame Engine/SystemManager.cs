@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ColdFlame
 {
-    static class SystemManager
+    internal static class SystemManager
     {
         private static List<GameSystem> systemList = new List<GameSystem>();
         static SystemManager() { }

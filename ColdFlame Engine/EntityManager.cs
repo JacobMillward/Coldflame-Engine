@@ -5,7 +5,7 @@ using System.Linq;
 namespace ColdFlame
 {
 
-    static class EntityManager
+    internal static class EntityManager
     {
 
         public delegate void EntityEventHandler(Entity entity, string eventType);
