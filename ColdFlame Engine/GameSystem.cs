@@ -34,6 +34,13 @@ namespace ColdFlame
                 actionableEntities.Add(e);
                 Console.WriteLine("{0} Added {1} to actionable entities", this.GetType().FullName, e.ToString());
             }
+
+            if (value == "Removed Component" && actionableEntities.Contains(e) && componentsMatched != actionableComponents.Count)
+            {
+                actionableEntities.Remove(e);
+                Console.WriteLine("{0} Removed {1} from actionable entities", this.GetType().FullName, e.ToString());
+                return;
+            }
         }
 
         public abstract void Update();

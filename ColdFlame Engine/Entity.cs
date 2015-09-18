@@ -23,6 +23,11 @@ namespace ColdFlame
             EntityManager.addComponent(guid, component);
         }
 
+        public void RemoveComponent(Component component)
+        {
+            EntityManager.removeComponent(guid, component);
+        }
+
         public T GetComponent<T>() where T:Component
         {
             return (T)EntityManager.getComponent(guid, typeof(T));

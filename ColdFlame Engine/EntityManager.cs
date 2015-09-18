@@ -25,6 +25,12 @@ namespace ColdFlame
             EntityEvent(new Entity(entityGUID), "New Component");
         }
 
+        internal static void removeComponent(Guid entityGUID, Component component)
+        {
+            _entityList[entityGUID].Remove(component);
+            EntityEvent(new Entity(entityGUID), "Removed Component");
+        }
+
         internal static void addComponent(Guid entityGUID, List<Component> componentList)
         {
             List<Component> value;
