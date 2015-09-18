@@ -61,5 +61,10 @@ namespace ColdFlame
             Entity e = (Entity)obj;
             return (this.guid == e.guid);
         }
+
+        public override int GetHashCode()
+        {
+            return guid.GetHashCode();
+        }
     }
 }
