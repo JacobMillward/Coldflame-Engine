@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 namespace ColdFlame
 {
@@ -25,6 +26,11 @@ namespace ColdFlame
         public T GetComponent<T>() where T:Component
         {
             return (T)EntityManager.getComponent(guid, typeof(T));
+        }
+
+        public List<Component> GetComponents(Type comType)
+        {
+            return EntityManager.getComponents(guid, comType);
         }
 
         public bool ContainsComponent(Type type)

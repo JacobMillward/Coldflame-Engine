@@ -49,6 +49,21 @@ namespace ColdFlame
             return components;
         }
 
+        public static List<Component> getComponents(Guid entityGUID, Type comType)
+        {
+            List<Component> components;
+            List<Component> matchedComponents = new List<Component>();
+            _entityList.TryGetValue(entityGUID, out components);
+            foreach (Component item in components)
+            {
+                if (item.GetType().Equals(comType))
+                {
+                    matchedComponents.Add(item);
+                }
+            }
+            return matchedComponents;
+        }
+
         public static Component getComponent(Guid entityGUID, Type comType)
         {
             List<Component> components;
