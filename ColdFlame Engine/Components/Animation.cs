@@ -1,5 +1,5 @@
 ﻿using SFML.Graphics;
-using System;
+using SFML.System;
 using System.Collections.Generic;
 
 namespace ColdFlame
@@ -9,7 +9,7 @@ namespace ColdFlame
         public List<SFML.Graphics.Sprite> spriteList = new List<SFML.Graphics.Sprite>();
         public int currentFrame { get; set; }
         public float frameRate { get; set; }
-        public SFML.System.Clock clock = new SFML.System.Clock();
+        public Clock clock = new Clock();
         public bool firstRun = true;
         public bool play = true;
 
@@ -22,13 +22,13 @@ namespace ColdFlame
         public Animation(string imagePath, int frameWidth, int frameHeight, int frames, int xOffset = 0, int yOffset = 0, float frameRate = 24f)
         {
             this.frameRate = frameRate;
-
+            Vector2i size = new Vector2i(frameWidth, frameHeight);
             currentFrame = 0;
             Texture t = new Texture(@imagePath);
             for(int i = 0; i < frames; i++)
             {
-                SFML.System.Vector2i pos = new SFML.System.Vector2i(i * frameWidth, 0);
-                SFML.System.Vector2i size = new SFML.System.Vector2i(frameWidth, frameHeight);
+                Vector2i pos = new Vector2i(i * frameWidth, 0);
+                
                 spriteList.Add(new SFML.Graphics.Sprite(t, new IntRect(pos, size)));
             }
         }
