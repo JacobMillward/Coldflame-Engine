@@ -29,7 +29,7 @@ namespace ColdFlame
                 }
             }
 
-            if (componentsMatched == actionableComponents.Count)
+            if (componentsMatched == actionableComponents.Count && !actionableEntities.Contains(e))
             {
                 actionableEntities.Add(e);
                 Console.WriteLine("{0} Added {1} to actionable entities", this.GetType().FullName, e.ToString());

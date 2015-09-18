@@ -46,5 +46,14 @@ namespace ColdFlame
             }
             return str + ">";
         }
+
+        public override bool Equals(System.Object obj)
+        {
+            if (obj == null)
+                return false;
+            if (this.GetType() != obj.GetType()) return false;
+            Entity e = (Entity)obj;
+            return (this.guid == e.guid);
+        }
     }
 }
