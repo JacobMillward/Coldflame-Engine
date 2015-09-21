@@ -3,8 +3,6 @@ By Jacob Millward
 
 This is a component-driven engine written in C#. It isn't yet completed, so use at your own risk.
 
-Based off of:
+Based off of [SFML.NET](http://www.sfml-dev.org/download/sfml.net/) - .NET bindings to SFML
 
-[SFML.NET](http://www.sfml-dev.org/download/sfml.net/) - .NET bindings to SFML
-
-[EntitySystem](https://github.com/JacobMillward/EntitySystem/) - My previous experiment in Java
+Comes with an example project to show you how to use the current features of the library.
