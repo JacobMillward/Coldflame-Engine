@@ -24,6 +24,7 @@ namespace ColdFlame
             _window = new RenderWindow(new VideoMode(screenDimensions.X, screenDimensions.Y), "SFML window", Styles.Close);
             _window.Closed += delegate { GameBase.running = false; _window.Close(); };
             _window.SetVisible(true);
+            _window.SetFramerateLimit(60);
             debugText = new Text("FPS: 0", debugFont, 24);
             debugText.Position = new Vector2f(_window.GetViewport(_window.GetView()).Width - debugText.GetLocalBounds().Width - 10, 0f);
             debugText.Color = Color.Black;
@@ -39,7 +40,7 @@ namespace ColdFlame
             {
                 Sprite s = e.GetComponent<Sprite>();
                 Position p = e.GetComponent<Position>();
-                s.image.Position = new SFML.System.Vector2f((float)p.x, (float)p.y);
+                s.image.Position = new Vector2f((float)p.x, (float)p.y);
 
                 _window.Draw(s.image);
             }
