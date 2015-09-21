@@ -10,6 +10,8 @@ namespace ColdFlame
 
         protected virtual void Initialise() { }
 
+        protected virtual void Update() { }
+
         public void Start()
         {
             Initialise();
@@ -17,6 +19,7 @@ namespace ColdFlame
             while(GameBase.running)
             {
                 SystemManager.doSystemUpdates();
+                Update();
             }
         }
     }

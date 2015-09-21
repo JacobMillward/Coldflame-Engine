@@ -20,6 +20,7 @@ namespace ColdFlame
 
         protected virtual void OnNotify(Entity e, string value)
         {
+            //TODO: Replace with code that checks type of notification properly
             int componentsMatched = 0;
             foreach (Type type in actionableComponents)
             {
