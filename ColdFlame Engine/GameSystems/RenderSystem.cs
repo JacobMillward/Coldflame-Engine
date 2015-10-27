@@ -14,6 +14,11 @@ namespace ColdFlame
         private Text debugText;
         private Clock clock = new Clock();
         private int frameCount;
+        public float fps
+        {
+            get;
+            private set;
+        }
         public override bool isUnique { get; } = true;
         public override int priority { get; } = 20;
 
@@ -49,7 +54,8 @@ namespace ColdFlame
                 frameCount++;
                 if (clock.ElapsedTime.AsSeconds() > 1f)
                 {
-                    debugText.DisplayedString = "FPS: " + Math.Floor(frameCount / clock.Restart().AsSeconds());
+                    fps = frameCount / clock.Restart().AsSeconds();
+                    debugText.DisplayedString = "FPS: " + Math.Floor(fps);
                     debugText.Position = new Vector2f(_window.GetViewport(_window.GetView()).Width - debugText.GetLocalBounds().Width - 10, 0f);
                     frameCount = 0;
                 }
