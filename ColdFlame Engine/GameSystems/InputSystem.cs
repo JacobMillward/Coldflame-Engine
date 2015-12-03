@@ -19,20 +19,20 @@ namespace ColdFlame
             foreach (Entity e in actionableEntities)
             {
                 Dictionary<KeyboardInput.Key, Action> inputEvents = e.GetComponent<KeyboardInput>().inputEvents;
-                foreach(KeyValuePair<KeyboardInput.Key, Action> keyEvent in inputEvents)
+                foreach(KeyValuePair<KeyboardInput.Key, Action> inputEvent in inputEvents)
                 {
-                    switch(keyEvent.Key.keyState)
+                    switch(inputEvent.Key.keyState)
                     {
-                        case KeyboardInput.Key.KeyState.Down:
-                            if(Keyboard.IsKeyPressed(keyEvent.Key.keyCode))
+                        case KeyboardInput.KeyState.Down:
+                            if(Keyboard.IsKeyPressed(inputEvent.Key.keyCode))
                             {
-                                keyEvent.Value();
+                                inputEvent.Value();
                             }
                           break;
-                        case KeyboardInput.Key.KeyState.Up:
-                            if (!Keyboard.IsKeyPressed(keyEvent.Key.keyCode))
+                        case KeyboardInput.KeyState.Up:
+                            if (!Keyboard.IsKeyPressed(inputEvent.Key.keyCode))
                             {
-                                keyEvent.Value();
+                                inputEvent.Value();
                             }
                             break;
                     }

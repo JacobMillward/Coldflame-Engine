@@ -7,15 +7,11 @@ namespace ColdFlame
     public class KeyboardInput : Component
     {
         public Dictionary<Key, Action> inputEvents;
-        
+
+        public enum KeyState { Up, Down };
+
         public struct Key
         {
-            public enum KeyState
-            {
-                Up,
-                Down,
-            };
-
             public KeyState keyState;
             public SFML.Window.Keyboard.Key keyCode;
 

@@ -1,4 +1,5 @@
 ﻿using ColdFlame;
+using SFML.Window;
 
 namespace Coldflame_Example
 {
@@ -20,10 +21,10 @@ namespace Coldflame_Example
             player.AddComponent(new KeyboardInput());
 
             KeyboardInput k = player.GetComponent<KeyboardInput>();
-            k.inputEvents.Add(new KeyboardInput.Key(KeyboardInput.Key.KeyState.Down, SFML.Window.Keyboard.Key.Down), new System.Action(delegate() { player.GetComponent<Position>().y += 1; }));
-            k.inputEvents.Add(new KeyboardInput.Key(KeyboardInput.Key.KeyState.Down, SFML.Window.Keyboard.Key.Up), new System.Action(delegate () { player.GetComponent<Position>().y -= 1; }));
-            k.inputEvents.Add(new KeyboardInput.Key(KeyboardInput.Key.KeyState.Down, SFML.Window.Keyboard.Key.Left), new System.Action(delegate () { player.GetComponent<Position>().x -= 1; }));
-            k.inputEvents.Add(new KeyboardInput.Key(KeyboardInput.Key.KeyState.Down, SFML.Window.Keyboard.Key.Right), new System.Action(delegate () { player.GetComponent<Position>().x += 1; }));
+            k.inputEvents.Add(new KeyboardInput.Key(KeyboardInput.KeyState.Down, Keyboard.Key.Down), delegate() {player.GetComponent<Position>().y += 1; });
+            k.inputEvents.Add(new KeyboardInput.Key(KeyboardInput.KeyState.Down, Keyboard.Key.Up), delegate () { player.GetComponent<Position>().y -= 1; });
+            k.inputEvents.Add(new KeyboardInput.Key(KeyboardInput.KeyState.Down, Keyboard.Key.Left), delegate () { player.GetComponent<Position>().x -= 1; });
+            k.inputEvents.Add(new KeyboardInput.Key(KeyboardInput.KeyState.Down, Keyboard.Key.Right), delegate () { player.GetComponent<Position>().x += 1; });
         }
 
     }
