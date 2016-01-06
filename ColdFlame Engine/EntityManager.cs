@@ -19,22 +19,26 @@ namespace ColdFlame
         internal static void AddComponent(Guid entityGuid, Component component)
         {
             List<Component> value;
-            EntityList.TryGetValue(entityGuid, out value);
-            value.Add(component);
+            if (EntityList.TryGetValue(entityGuid, out value))
+            {
+                value.Add(component);
+            }
             EntityEvent(new Entity(entityGuid), "New Component");
         }
 
-        internal static void RemoveComponent(Guid entityGUID, Component component)
+        internal static void RemoveComponent(Guid entityGuid, Component component)
         {
-            EntityList[entityGUID].Remove(component);
-            EntityEvent(new Entity(entityGUID), "Removed Component");
+            EntityList[entityGuid].Remove(component);
+            EntityEvent(new Entity(entityGuid), "Removed Component");
         }
 
         internal static void AddComponent(Guid entityGuid, IEnumerable<Component> componentList)
         {
             List<Component> value;
-            EntityList.TryGetValue(entityGuid, out value);
-            value.AddRange(componentList);
+            if (EntityList.TryGetValue(entityGuid, out value))
+            {
+                value.AddRange(componentList);
+            }
             EntityEvent(new Entity(entityGuid), "New Component");
         }
 
@@ -54,19 +58,17 @@ namespace ColdFlame
         internal static List<Component> GetComponents(Guid entityGuid, Type comType)
         {
             List<Component> components;
-            EntityList.TryGetValue(entityGuid, out components);
-            return components.Where(item => item.GetType() == comType).ToList();
+            return EntityList.TryGetValue(entityGuid, out components)
+                ? components.Where(item => item.GetType() == comType).ToList()
+                : null;
         }
 
         internal static Component GetComponent(Guid entityGuid, Type comType)
         {
             List<Component> components;
-            EntityList.TryGetValue(entityGuid, out components);
-            foreach (var item in components.Where(item => item.GetType() == comType))
-            {
-                return item;
-            }
-            return components[0];
+            return !EntityList.TryGetValue(entityGuid, out components)
+                ? null
+                : components.FirstOrDefault(item => item.GetType() == comType);
         }
 
         internal static List<Guid> GetEntityList()
@@ -77,7 +79,8 @@ namespace ColdFlame
         internal static bool ContainsComponent(Guid entityGuid, Type comType)
         {
             List<Component> componentList;
-            return EntityList.TryGetValue(entityGuid, out componentList) && componentList.Any(c => comType == c.GetType());
+            return EntityList.TryGetValue(entityGuid, out componentList) &&
+                   componentList.Any(c => comType == c.GetType());
         }
     }
 }
