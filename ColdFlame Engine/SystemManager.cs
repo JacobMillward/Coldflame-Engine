@@ -1,45 +1,42 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ColdFlame
 {
     internal static class SystemManager
     {
-        private static List<GameSystem> systemList = new List<GameSystem>();
-        static SystemManager() { }
+        private static readonly List<GameSystem> SystemList = new List<GameSystem>();
+
+        static SystemManager()
+        {
+        }
 
         internal static void Add(GameSystem system)
         {
-            if (system.isUnique)
+            if (system.IsUnique)
             {
-                foreach (GameSystem s in systemList)
+                if (SystemList.Any(s => s.GetType() == system.GetType()))
                 {
-                    if (s.GetType() == system.GetType())
-                    {
-                        throw new Exception("Cannot add more than one unique System to the SystemManager");
-                    }
+                    throw new Exception("Cannot add more than one unique System to the SystemManager");
                 }
             }
-            foreach(GameSystem s in systemList)
+            foreach (var s in SystemList.Where(s => system.Priority <= s.Priority))
             {
-                if (system.priority <= s.priority)
-                {
-                    systemList.Insert(systemList.IndexOf(s), system);
-                    return;
-                }
+                SystemList.Insert(SystemList.IndexOf(s), system);
+                return;
             }
-            systemList.Add(system);
-
+            SystemList.Add(system);
         }
 
         internal static void Remove(GameSystem system)
         {
-            systemList.Remove(system);
+            SystemList.Remove(system);
         }
 
-        internal static void doSystemUpdates()
+        internal static void DoSystemUpdates()
         {
-            foreach (GameSystem system in systemList)
+            foreach (var system in SystemList)
             {
                 system.Update();
             }

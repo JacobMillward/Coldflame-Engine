@@ -1,24 +1,24 @@
-﻿using SFML.Graphics;
-using System.Collections.Generic;
-
-namespace ColdFlame
+﻿namespace ColdFlame
 {
     public class GameBase
     {
+        public static bool Running { private get; set; }
 
-        public static bool running { get; set; }
+        protected virtual void Initialise()
+        {
+        }
 
-        protected virtual void Initialise() { }
-
-        protected virtual void Update() { }
+        protected virtual void Update()
+        {
+        }
 
         public void Start()
         {
             Initialise();
-            GameBase.running = true;
-            while(GameBase.running)
+            Running = true;
+            while (Running)
             {
-                SystemManager.doSystemUpdates();
+                SystemManager.DoSystemUpdates();
                 Update();
             }
         }

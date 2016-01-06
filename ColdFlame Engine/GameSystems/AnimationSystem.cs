@@ -1,36 +1,34 @@
-﻿using System;
+﻿using ColdFlame.Components;
 
-namespace ColdFlame
+namespace ColdFlame.GameSystems
 {
     public class AnimationSystem : GameSystem
     {
-        public AnimationSystem() : base ()
+        public AnimationSystem()
         {
-            actionableComponents.Add(typeof(Sprite));
-            actionableComponents.Add(typeof(Animation));
+            ActionableComponents.Add(typeof (Sprite));
+            ActionableComponents.Add(typeof (Animation));
         }
 
         public override void Update()
         {
-            foreach (Entity e in actionableEntities)
+            foreach (var e in ActionableEntities)
             {
-                Sprite s = e.GetComponent<Sprite>();
-                Animation a = e.GetComponent<Animation>();
-                if ((a.clock.ElapsedTime.AsSeconds() > (1/a.frameRate) || a.firstRun) && a.play)
+                var s = e.GetComponent<Sprite>();
+                var a = e.GetComponent<Animation>();
+                if ((!(a.Clock.ElapsedTime.AsSeconds() > 1/a.FrameRate) && !a.FirstRun) || !a.Play) continue;
+                a.FirstRun = false;
+                var frameCount = a.SpriteList.Count;
+                if (a.CurrentFrame < frameCount - 1)
                 {
-                    a.firstRun = false;
-                    int frameCount = a.spriteList.Count;
-                    if (a.currentFrame < frameCount - 1)
-                    {
-                        a.currentFrame++;
-                    }
-                    else
-                    {
-                        a.currentFrame = 0;
-                    }
-                    s.image = a.spriteList[a.currentFrame];
-                    a.clock.Restart();
+                    a.CurrentFrame++;
                 }
+                else
+                {
+                    a.CurrentFrame = 0;
+                }
+                s.Image = a.SpriteList[a.CurrentFrame];
+                a.Clock.Restart();
             }
         }
     }

@@ -1,41 +1,43 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
+using ColdFlame.Components;
 using SFML.Window;
 
-namespace ColdFlame
+namespace ColdFlame.GameSystems
 {
     public class InputSystem : GameSystem
     {
-        public override bool isUnique { get; } = true;
-        public override int priority { get; } = 2;
-
-        public InputSystem() : base()
+        public InputSystem()
         {
-            actionableComponents.Add(typeof(KeyboardInput));
+            ActionableComponents.Add(typeof (KeyboardInput));
         }
+
+        public override bool IsUnique { get; } = true;
+        public override int Priority { get; } = 2;
 
         public override void Update()
         {
-            foreach (Entity e in actionableEntities)
+            foreach (
+                var inputEvent in
+                    ActionableEntities.Select(e => e.GetComponent<KeyboardInput>().InputEvents)
+                        .SelectMany(inputEvents => inputEvents))
             {
-                Dictionary<KeyboardInput.Key, Action> inputEvents = e.GetComponent<KeyboardInput>().inputEvents;
-                foreach(KeyValuePair<KeyboardInput.Key, Action> inputEvent in inputEvents)
+                switch (inputEvent.Key.KeyState)
                 {
-                    switch(inputEvent.Key.keyState)
-                    {
-                        case KeyboardInput.KeyState.Down:
-                            if(Keyboard.IsKeyPressed(inputEvent.Key.keyCode))
-                            {
-                                inputEvent.Value();
-                            }
-                          break;
-                        case KeyboardInput.KeyState.Up:
-                            if (!Keyboard.IsKeyPressed(inputEvent.Key.keyCode))
-                            {
-                                inputEvent.Value();
-                            }
-                            break;
-                    }
+                    case KeyboardInput.KeyState.Down:
+                        if (Keyboard.IsKeyPressed(inputEvent.Key.KeyCode))
+                        {
+                            inputEvent.Value();
+                        }
+                        break;
+                    case KeyboardInput.KeyState.Up:
+                        if (!Keyboard.IsKeyPressed(inputEvent.Key.KeyCode))
+                        {
+                            inputEvent.Value();
+                        }
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
                 }
             }
         }

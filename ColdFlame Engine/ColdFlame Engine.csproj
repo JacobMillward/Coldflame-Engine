@@ -43,7 +43,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Component.cs" />
+    <Compile Include="Components\Component.cs" />
     <Compile Include="Components\Animation.cs" />
     <Compile Include="Components\KeyboardInput.cs" />
     <Compile Include="Components\Position.cs" />
@@ -52,7 +52,7 @@
     <Compile Include="Entity.cs" />
     <Compile Include="EntityManager.cs" />
     <Compile Include="GameBase.cs" />
-    <Compile Include="GameSystem.cs" />
+    <Compile Include="GameSystems\GameSystem.cs" />
     <Compile Include="GameSystems\AnimationSystem.cs" />
     <Compile Include="GameSystems\InputSystem.cs" />
     <Compile Include="GameSystems\PhysicsSystem.cs" />

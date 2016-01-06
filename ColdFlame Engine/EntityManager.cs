@@ -4,105 +4,80 @@ using System.Linq;
 
 namespace ColdFlame
 {
-
     internal static class EntityManager
     {
-
         public delegate void EntityEventHandler(Entity entity, string eventType);
-        public static EntityEventHandler EntityEvent;
-        private static Dictionary<Guid, List<Component>> _entityList = new Dictionary<Guid, List<Component>>();
 
-        internal static Guid generateGUID()
+        public static EntityEventHandler EntityEvent;
+        private static readonly Dictionary<Guid, List<Component>> EntityList = new Dictionary<Guid, List<Component>>();
+
+        internal static Guid GenerateGuid()
         {
             return Guid.NewGuid();
         }
 
-        internal static void addComponent(Guid entityGUID, Component component)
+        internal static void AddComponent(Guid entityGuid, Component component)
         {
             List<Component> value;
-            _entityList.TryGetValue(entityGUID, out value);
+            EntityList.TryGetValue(entityGuid, out value);
             value.Add(component);
-            EntityEvent(new Entity(entityGUID), "New Component");
+            EntityEvent(new Entity(entityGuid), "New Component");
         }
 
-        internal static void removeComponent(Guid entityGUID, Component component)
+        internal static void RemoveComponent(Guid entityGUID, Component component)
         {
-            _entityList[entityGUID].Remove(component);
+            EntityList[entityGUID].Remove(component);
             EntityEvent(new Entity(entityGUID), "Removed Component");
         }
 
-        internal static void addComponent(Guid entityGUID, List<Component> componentList)
+        internal static void AddComponent(Guid entityGuid, IEnumerable<Component> componentList)
         {
             List<Component> value;
-            _entityList.TryGetValue(entityGUID, out value);
-            foreach(Component component in componentList)
-            {
-                value.Add(component);
-            }
-            EntityEvent(new Entity(entityGUID), "New Component");
+            EntityList.TryGetValue(entityGuid, out value);
+            value.AddRange(componentList);
+            EntityEvent(new Entity(entityGuid), "New Component");
         }
 
-        internal static void addEntity(Entity entity)
+        internal static void AddEntity(Entity entity)
         {
-            _entityList.Add(entity.guid, new List<Component>());
+            EntityList.Add(entity.Guid, new List<Component>());
             EntityEvent(entity, "New Entity");
         }
 
-        internal static List<Component> getComponents(Guid entityGUID)
+        internal static List<Component> GetComponents(Guid entityGuid)
         {
             List<Component> components;
-            _entityList.TryGetValue(entityGUID, out components);
+            EntityList.TryGetValue(entityGuid, out components);
             return components;
         }
 
-        internal static List<Component> getComponents(Guid entityGUID, Type comType)
+        internal static List<Component> GetComponents(Guid entityGuid, Type comType)
         {
             List<Component> components;
-            List<Component> matchedComponents = new List<Component>();
-            _entityList.TryGetValue(entityGUID, out components);
-            foreach (Component item in components)
-            {
-                if (item.GetType().Equals(comType))
-                {
-                    matchedComponents.Add(item);
-                }
-            }
-            return matchedComponents;
+            EntityList.TryGetValue(entityGuid, out components);
+            return components.Where(item => item.GetType() == comType).ToList();
         }
 
-        internal static Component getComponent(Guid entityGUID, Type comType)
+        internal static Component GetComponent(Guid entityGuid, Type comType)
         {
             List<Component> components;
-            _entityList.TryGetValue(entityGUID, out components);
-            foreach (Component item in components)
+            EntityList.TryGetValue(entityGuid, out components);
+            foreach (var item in components.Where(item => item.GetType() == comType))
             {
-                if (item.GetType().Equals(comType))
-                {
-                    return item;
-                }
+                return item;
             }
             return components[0];
         }
 
-        internal static List<Guid> getEntityList()
+        internal static List<Guid> GetEntityList()
         {
-            return _entityList.Keys.ToList<Guid>();
+            return EntityList.Keys.ToList();
         }
 
-        internal static bool containsComponent(Guid entityGUID, Type comType)
+        internal static bool ContainsComponent(Guid entityGuid, Type comType)
         {
             List<Component> componentList;
-            if (_entityList.TryGetValue(entityGUID, out componentList))
-            {
-                foreach (Component c in componentList)
-                {
-                    if (comType.Equals(c.GetType()))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            return EntityList.TryGetValue(entityGuid, out componentList) && componentList.Any(c => comType == c.GetType());
         }
     }
 }

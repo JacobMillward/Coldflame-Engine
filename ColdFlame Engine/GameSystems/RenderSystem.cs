@@ -1,73 +1,80 @@
-using SFML.Graphics;
-using SFML.Window;
-using SFML.System;
 using System;
+using ColdFlame.Components;
+using SFML.Graphics;
+using SFML.System;
+using SFML.Window;
+using Sprite = ColdFlame.Components.Sprite;
 
-namespace ColdFlame
+namespace ColdFlame.GameSystems
 {
-
     public class RenderSystem : GameSystem
     {
-        private RenderWindow _window;
-        private bool debugMode = false;
-        private Font debugFont = new Font(@"C:\Windows\Fonts\arial.ttf");
-        private Text debugText;
-        private Clock clock = new Clock();
-        private int frameCount;
-        public float fps
+        private readonly Clock _clock = new Clock();
+        private readonly Font _debugFont = new Font(@"C:\Windows\Fonts\arial.ttf");
+        private readonly Text _debugText;
+        private readonly RenderWindow _window;
+        private bool _debugMode;
+        private int _frameCount;
+
+        public RenderSystem(Vector2u screenDimensions)
         {
-            get;
-            private set;
-        }
-        public override bool isUnique { get; } = true;
-        public override int priority { get; } = 20;
+            ActionableComponents.Add(typeof (Position));
+            ActionableComponents.Add(typeof (Sprite));
 
-        public RenderSystem(Vector2u screenDimensions) : base() {
-            actionableComponents.Add(typeof(Position));
-            actionableComponents.Add(typeof(Sprite));
-
-            _window = new RenderWindow(new VideoMode(screenDimensions.X, screenDimensions.Y), "SFML window", Styles.Close);
-            _window.Closed += delegate { GameBase.running = false; _window.Close(); };
+            _window = new RenderWindow(new VideoMode(screenDimensions.X, screenDimensions.Y), "SFML window",
+                Styles.Close);
+            _window.Closed += delegate
+            {
+                GameBase.Running = false;
+                _window.Close();
+            };
             _window.SetVisible(true);
             _window.SetFramerateLimit(60);
-            debugText = new Text("FPS: 0", debugFont, 24);
-            debugText.Position = new Vector2f(_window.GetViewport(_window.GetView()).Width - debugText.GetLocalBounds().Width - 10, 0f);
-            debugText.Color = Color.Black;
-            debugText.CharacterSize = 16;
-
+            _debugText = new Text("FPS: 0", _debugFont, 24);
+            _debugText.Position =
+                new Vector2f(_window.GetViewport(_window.GetView()).Width - _debugText.GetLocalBounds().Width - 10, 0f);
+            _debugText.Color = Color.Black;
+            _debugText.CharacterSize = 16;
         }
+
+        public float Fps { get; private set; }
+
+        public override bool IsUnique { get; } = true;
+        public override int Priority { get; } = 20;
 
         public override void Update()
         {
             _window.DispatchEvents();
             _window.Clear(Color.White);
-            foreach (Entity e in actionableEntities)
+            foreach (var e in ActionableEntities)
             {
-                Sprite s = e.GetComponent<Sprite>();
-                Position p = e.GetComponent<Position>();
-                s.image.Position = new Vector2f((float)p.x, (float)p.y);
+                var s = e.GetComponent<Sprite>();
+                var p = e.GetComponent<Position>();
+                s.Image.Position = new Vector2f(p.X, p.Y);
 
-                _window.Draw(s.image);
+                _window.Draw(s.Image);
             }
-            if (debugMode)
+            if (_debugMode)
             {
-                frameCount++;
-                if (clock.ElapsedTime.AsSeconds() > 1f)
+                _frameCount++;
+                if (_clock.ElapsedTime.AsSeconds() > 1f)
                 {
-                    fps = frameCount / clock.Restart().AsSeconds();
-                    debugText.DisplayedString = "FPS: " + Math.Floor(fps);
-                    debugText.Position = new Vector2f(_window.GetViewport(_window.GetView()).Width - debugText.GetLocalBounds().Width - 10, 0f);
-                    frameCount = 0;
+                    Fps = _frameCount/_clock.Restart().AsSeconds();
+                    _debugText.DisplayedString = "FPS: " + Math.Floor(Fps);
+                    _debugText.Position =
+                        new Vector2f(
+                            _window.GetViewport(_window.GetView()).Width - _debugText.GetLocalBounds().Width - 10, 0f);
+                    _frameCount = 0;
                 }
-                
-                _window.Draw(debugText);
+
+                _window.Draw(_debugText);
             }
             _window.Display();
         }
 
-        public void setDebug(bool value = true)
+        public void SetDebug(bool value = true)
         {
-            debugMode = value;
+            _debugMode = value;
         }
     }
 }

@@ -2,29 +2,33 @@
 using System.Collections.Generic;
 using SFML.Window;
 
-namespace ColdFlame
+namespace ColdFlame.Components
 {
     public class KeyboardInput : Component
     {
-        public Dictionary<Key, Action> inputEvents;
+        public enum KeyState
+        {
+            Up,
+            Down
+        }
 
-        public enum KeyState { Up, Down };
+        public Dictionary<Key, Action> InputEvents;
+
+        public KeyboardInput()
+        {
+            InputEvents = new Dictionary<Key, Action>();
+        }
 
         public struct Key
         {
-            public KeyState keyState;
-            public SFML.Window.Keyboard.Key keyCode;
+            public KeyState KeyState;
+            public Keyboard.Key KeyCode;
 
-            public Key( KeyState keyState, SFML.Window.Keyboard.Key keyCode)
+            public Key(KeyState keyState, Keyboard.Key keyCode)
             {
-                this.keyState = keyState;
-                this.keyCode = keyCode;
+                this.KeyState = keyState;
+                this.KeyCode = keyCode;
             }
-        }
-        
-        public KeyboardInput()
-        {
-            inputEvents = new Dictionary<Key, Action>();
         }
     }
 }

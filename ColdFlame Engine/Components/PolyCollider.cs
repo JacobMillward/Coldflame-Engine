@@ -1,15 +1,14 @@
-﻿
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace ColdFlame
+namespace ColdFlame.Components
 {
     public class PolyCollider : Component
     {
-        public List<float> points;
+        private List<float> Points { get; }
 
         public PolyCollider(List<float> points)
         {
-            this.points = points;
+            this.Points = points;
         }
     }
 }

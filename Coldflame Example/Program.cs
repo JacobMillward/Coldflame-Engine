@@ -1,12 +1,10 @@
-﻿using System;
-
-namespace Coldflame_Example
+﻿namespace Coldflame_Example
 {
-    class Program
+    internal class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            Game app = new Game();
+            var app = new Game();
             app.Start();
         }
     }

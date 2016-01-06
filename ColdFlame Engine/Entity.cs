@@ -1,53 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
 namespace ColdFlame
 {
     public class Entity
     {
-        public Guid guid { get; private set; }
-
         public Entity()
         {
-            this.guid = EntityManager.generateGUID();
-            EntityManager.addEntity(this);
+            Guid = EntityManager.GenerateGuid();
+            EntityManager.AddEntity(this);
         }
 
         public Entity(Guid guid)
         {
-            this.guid = guid;
+            this.Guid = guid;
         }
+
+        public Guid Guid { get; }
 
         public void AddComponent(Component component)
         {
-            EntityManager.addComponent(guid, component);
+            EntityManager.AddComponent(Guid, component);
         }
 
         public void RemoveComponent(Component component)
         {
-            EntityManager.removeComponent(guid, component);
+            EntityManager.RemoveComponent(Guid, component);
         }
 
-        public T GetComponent<T>() where T:Component
+        public T GetComponent<T>() where T : Component
         {
-            return (T)EntityManager.getComponent(guid, typeof(T));
+            return (T) EntityManager.GetComponent(Guid, typeof (T));
         }
 
         public List<Component> GetComponents(Type comType)
         {
-            return EntityManager.getComponents(guid, comType);
+            return EntityManager.GetComponents(Guid, comType);
         }
 
         public bool ContainsComponent(Type type)
         {
-            return EntityManager.containsComponent(guid, type);
+            return EntityManager.ContainsComponent(Guid, type);
         }
 
         public override string ToString()
         {
-            string str = "Entity#" + guid.ToString() + "<";
-            var list = EntityManager.getComponents(guid);
-            foreach (Component c in list)
+            var str = "Entity#" + Guid + "<";
+            var list = EntityManager.GetComponents(Guid);
+            foreach (var c in list)
             {
                 str += c.GetType().FullName;
                 if (!c.Equals(list.Last()))
@@ -58,18 +59,18 @@ namespace ColdFlame
             return str + ">";
         }
 
-        public override bool Equals(System.Object obj)
+        public override bool Equals(object obj)
         {
             if (obj == null)
                 return false;
-            if (this.GetType() != obj.GetType()) return false;
-            Entity e = (Entity)obj;
-            return (this.guid == e.guid);
+            if (GetType() != obj.GetType()) return false;
+            var e = (Entity) obj;
+            return Guid == e.Guid;
         }
 
         public override int GetHashCode()
         {
-            return guid.GetHashCode();
+            return Guid.GetHashCode();
         }
     }
 }
