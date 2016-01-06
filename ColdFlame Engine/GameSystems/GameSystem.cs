@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ColdFlame
+namespace ColdFlame.GameSystems
 {
     public abstract class GameSystem
     {
