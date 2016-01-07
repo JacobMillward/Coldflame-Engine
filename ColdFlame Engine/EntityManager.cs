@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ColdFlame.Events;
 
 namespace ColdFlame
 {
     internal static class EntityManager
     {
-        internal delegate void EntityEventHandler(Entity entity, string eventType);
+        public delegate void EntityEventHandler(Entity entity, EntityEventType eventType);
 
-        public static event EntityEventHandler EntityEvent;
+        public static EntityEventHandler EntityEvent;
         private static readonly Dictionary<Guid, List<Component>> EntityList = new Dictionary<Guid, List<Component>>();
 
         internal static Guid GenerateGuid()
@@ -23,13 +24,13 @@ namespace ColdFlame
             {
                 value.Add(component);
             }
-            EntityEvent?.Invoke(new Entity(entityGuid), "New Component");
+            EntityEvent(new Entity(entityGuid), EntityEventType.NewComponent);
         }
 
         internal static void RemoveComponent(Guid entityGuid, Component component)
         {
             EntityList[entityGuid].Remove(component);
-            EntityEvent?.Invoke(new Entity(entityGuid), "Removed Component");
+            EntityEvent(new Entity(entityGuid), EntityEventType.RemovedComponent);
         }
 
         internal static void AddComponent(Guid entityGuid, IEnumerable<Component> componentList)
@@ -39,13 +40,13 @@ namespace ColdFlame
             {
                 value.AddRange(componentList);
             }
-            EntityEvent?.Invoke(new Entity(entityGuid), "New Component");
+            EntityEvent(new Entity(entityGuid), EntityEventType.NewComponent);
         }
 
         internal static void AddEntity(Entity entity)
         {
             EntityList.Add(entity.Guid, new List<Component>());
-            EntityEvent?.Invoke(entity, "New Entity");
+            EntityEvent(entity, EntityEventType.NewEntity);
         }
 
         internal static List<Component> GetComponents(Guid entityGuid)

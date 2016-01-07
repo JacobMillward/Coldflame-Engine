@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using ColdFlame.Events;
 
 namespace ColdFlame.GameSystems
 {
@@ -19,21 +20,34 @@ namespace ColdFlame.GameSystems
         public virtual bool IsUnique { get; } = false;
         public virtual int Priority { get; } = 0;
 
-        protected virtual void OnNotify(Entity e, string value)
+        protected virtual void OnNotify(Entity e, EntityEventType eventType)
         {
-            //TODO: Replace with code that checks type of notification properly
             var componentsMatched = ActionableComponents.Count(e.ContainsComponent);
 
-            if (componentsMatched == ActionableComponents.Count && !ActionableEntities.Contains(e))
+            switch (eventType)
             {
-                ActionableEntities.Add(e);
-                Console.WriteLine("{0} Added {1} to actionable entities", GetType().FullName, e);
-            }
+                case EntityEventType.NewEntity:
+                    break;
 
-            if (value != "Removed Component" || !ActionableEntities.Contains(e) ||
-                componentsMatched == ActionableComponents.Count) return;
-            ActionableEntities.Remove(e);
-            Console.WriteLine("{0} Removed {1} from actionable entities", GetType().FullName, e);
+                case EntityEventType.NewComponent:
+                    if (componentsMatched == ActionableComponents.Count && !ActionableEntities.Contains(e))
+                    {
+                        ActionableEntities.Add(e);
+                        Console.WriteLine("{0} Added {1} to actionable entities", GetType().FullName, e);
+                    }
+                    break;
+
+                case EntityEventType.RemovedComponent:
+                    if (ActionableEntities.Contains(e) && componentsMatched != ActionableComponents.Count)
+                    {
+                        ActionableEntities.Remove(e);
+                        Console.WriteLine("{0} Removed {1} from actionable entities", GetType().FullName, e);
+                    }
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(eventType), eventType, null);
+            }
         }
 
         public abstract void Update();
