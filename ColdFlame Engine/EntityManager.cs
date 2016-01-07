@@ -23,13 +23,13 @@ namespace ColdFlame
             {
                 value.Add(component);
             }
-            EntityEvent(new Entity(entityGuid), "New Component");
+            EntityEvent?.Invoke(new Entity(entityGuid), "New Component");
         }
 
         internal static void RemoveComponent(Guid entityGuid, Component component)
         {
             EntityList[entityGuid].Remove(component);
-            EntityEvent(new Entity(entityGuid), "Removed Component");
+            EntityEvent?.Invoke(new Entity(entityGuid), "Removed Component");
         }
 
         internal static void AddComponent(Guid entityGuid, IEnumerable<Component> componentList)
@@ -39,13 +39,13 @@ namespace ColdFlame
             {
                 value.AddRange(componentList);
             }
-            EntityEvent(new Entity(entityGuid), "New Component");
+            EntityEvent?.Invoke(new Entity(entityGuid), "New Component");
         }
 
         internal static void AddEntity(Entity entity)
         {
             EntityList.Add(entity.Guid, new List<Component>());
-            EntityEvent(entity, "New Entity");
+            EntityEvent?.Invoke(entity, "New Entity");
         }
 
         internal static List<Component> GetComponents(Guid entityGuid)
