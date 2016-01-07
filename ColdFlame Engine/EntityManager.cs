@@ -6,7 +6,7 @@ namespace ColdFlame
 {
     internal static class EntityManager
     {
-        public delegate void EntityEventHandler(Entity entity, string eventType);
+        internal delegate void EntityEventHandler(Entity entity, string eventType);
 
         public static event EntityEventHandler EntityEvent;
         private static readonly Dictionary<Guid, List<Component>> EntityList = new Dictionary<Guid, List<Component>>();
