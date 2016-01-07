@@ -51,6 +51,7 @@
     <Compile Include="Components\Sprite.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityManager.cs" />
+    <Compile Include="EventBroadcaster.cs" />
     <Compile Include="GameBase.cs" />
     <Compile Include="GameSystems\GameSystem.cs" />
     <Compile Include="GameSystems\AnimationSystem.cs" />
