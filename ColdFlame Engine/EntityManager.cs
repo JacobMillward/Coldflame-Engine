@@ -8,7 +8,7 @@ namespace ColdFlame
     {
         public delegate void EntityEventHandler(Entity entity, string eventType);
 
-        public static EntityEventHandler EntityEvent;
+        public static event EntityEventHandler EntityEvent;
         private static readonly Dictionary<Guid, List<Component>> EntityList = new Dictionary<Guid, List<Component>>();
 
         internal static Guid GenerateGuid()
