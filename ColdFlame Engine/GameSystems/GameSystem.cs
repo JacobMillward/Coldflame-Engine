@@ -18,7 +18,7 @@ namespace ColdFlame.GameSystems
         }
 
         public virtual bool IsUnique { get; } = false;
-        public virtual int Priority { get; } = 0;
+        public virtual SystemPriority Priority { get; } = SystemPriority.LOW;
 
         protected virtual void OnNotify(Entity e, EntityEventType eventType)
         {
