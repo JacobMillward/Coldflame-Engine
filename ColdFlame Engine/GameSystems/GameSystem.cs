@@ -23,33 +23,33 @@ namespace ColdFlame.GameSystems
         public virtual bool IsUnique { get; } = false;
         public virtual int Priority { get; } = 0;
 
-        protected virtual void OnNotify(Entity e, EntityEventType eventType)
+        protected virtual void OnNotify(EntityEventData eventData)
         {
-            var componentsMatched = ActionableComponents.Count(e.ContainsComponent);
+            var componentsMatched = ActionableComponents.Count(eventData.Entity.ContainsComponent);
 
-            switch (eventType)
+            switch (eventData.EventType)
             {
                 case EntityEventType.NewEntity:
                     break;
 
                 case EntityEventType.NewComponent:
-                    if (componentsMatched == ActionableComponents.Count && !ActionableEntities.Contains(e))
+                    if (componentsMatched == ActionableComponents.Count && !ActionableEntities.Contains(eventData.Entity))
                     {
-                        ActionableEntities.Add(e);
-                        Console.WriteLine("{0} Added {1} to actionable entities", GetType().FullName, e);
+                        ActionableEntities.Add(eventData.Entity);
+                        Console.WriteLine("{0} Added {1} to actionable entities", GetType().FullName, eventData.Entity);
                     }
                     break;
 
                 case EntityEventType.RemovedComponent:
-                    if (ActionableEntities.Contains(e) && componentsMatched != ActionableComponents.Count)
+                    if (ActionableEntities.Contains(eventData.Entity) && componentsMatched != ActionableComponents.Count)
                     {
-                        ActionableEntities.Remove(e);
-                        Console.WriteLine("{0} Removed {1} from actionable entities", GetType().FullName, e);
+                        ActionableEntities.Remove(eventData.Entity);
+                        Console.WriteLine("{0} Removed {1} from actionable entities", GetType().FullName, eventData.Entity);
                     }
                     break;
 
                 default:
-                    throw new ArgumentOutOfRangeException(nameof(eventType), eventType, null);
+                    throw new ArgumentOutOfRangeException(nameof(eventData.EventType), eventData.EventType, null);
             }
         }
 

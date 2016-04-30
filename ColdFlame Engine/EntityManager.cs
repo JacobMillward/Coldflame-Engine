@@ -7,7 +7,7 @@ namespace ColdFlame
 {
     internal static class EntityManager
     {
-        public delegate void EntityEventHandler(Entity entity, EntityEventType eventType);
+        public delegate void EntityEventHandler(EntityEventData eventData);
 
         public static EntityEventHandler EntityEvent;
         private static readonly Dictionary<Guid, List<Component>> EntityList = new Dictionary<Guid, List<Component>>();
@@ -24,29 +24,33 @@ namespace ColdFlame
             {
                 value.Add(component);
             }
-            EntityEvent(new Entity(entityGuid), EntityEventType.NewComponent);
+            EntityEvent(new EntityEventData(EntityEventType.NewComponent, new Entity(entityGuid), component));
         }
 
         internal static void RemoveComponent(Guid entityGuid, Component component)
         {
             EntityList[entityGuid].Remove(component);
-            EntityEvent(new Entity(entityGuid), EntityEventType.RemovedComponent);
+            EntityEvent(new EntityEventData(EntityEventType.RemovedComponent, new Entity(entityGuid), component));
         }
 
         internal static void AddComponent(Guid entityGuid, IEnumerable<Component> componentList)
         {
             List<Component> value;
+            var collection = componentList as IList<Component> ?? componentList.ToList();
             if (EntityList.TryGetValue(entityGuid, out value))
             {
-                value.AddRange(componentList);
+                value.AddRange(collection);
             }
-            EntityEvent(new Entity(entityGuid), EntityEventType.NewComponent);
+            foreach (var c in collection)
+            {
+                EntityEvent(new EntityEventData(EntityEventType.NewComponent, new Entity(entityGuid), c));
+            }
         }
 
         internal static void AddEntity(Entity entity)
         {
             EntityList.Add(entity.Guid, new List<Component>());
-            EntityEvent(entity, EntityEventType.NewEntity);
+            EntityEvent(new EntityEventData(EntityEventType.NewEntity, entity, null));
         }
 
         internal static List<Component> GetComponents(Guid entityGuid)
