@@ -6,10 +6,10 @@ namespace ColdFlame.Components
 {
     public class Animation : Component
     {
-        public readonly Clock Clock = new Clock();
         public bool FirstRun = true;
         public bool Play = true;
         public List<SFML.Graphics.Sprite> SpriteList = new List<SFML.Graphics.Sprite>();
+        public float totalDeltaTime;
 
         public Animation(List<SFML.Graphics.Sprite> list)
         {

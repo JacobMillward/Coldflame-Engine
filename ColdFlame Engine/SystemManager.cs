@@ -39,7 +39,7 @@ namespace ColdFlame
         {
             foreach (var system in SystemList)
             {
-                system.Update();
+                system.Update(system.TimerClock.Restart().AsSeconds());
             }
         }
     }

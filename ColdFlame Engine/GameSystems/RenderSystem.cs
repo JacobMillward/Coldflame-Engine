@@ -14,7 +14,7 @@ namespace ColdFlame.GameSystems
         private readonly Text _debugText;
         private readonly RenderWindow _window;
         private bool _debugMode;
-        private int _frameCount;
+        private float totalTime;
 
         public RenderSystem(Vector2u screenDimensions)
         {
@@ -29,7 +29,7 @@ namespace ColdFlame.GameSystems
                 _window.Close();
             };
             _window.SetVisible(true);
-            _window.SetFramerateLimit(60);
+            //_window.SetFramerateLimit(60);
             _debugText = new Text("FPS: 0", _debugFont, 24);
             _debugText.Position =
                 new Vector2f(_window.GetViewport(_window.GetView()).Width - _debugText.GetLocalBounds().Width - 10, 0f);
@@ -42,7 +42,7 @@ namespace ColdFlame.GameSystems
         public override bool IsUnique { get; } = true;
         public override int Priority { get; } = 20;
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             _window.DispatchEvents();
             _window.Clear(Color.White);
@@ -56,16 +56,17 @@ namespace ColdFlame.GameSystems
             }
             if (_debugMode)
             {
-                _frameCount++;
-                if (_clock.ElapsedTime.AsSeconds() > 1f)
+                totalTime += deltaTime;
+                if (totalTime > 0.5f)
                 {
-                    Fps = _frameCount/_clock.Restart().AsSeconds();
-                    _debugText.DisplayedString = "FPS: " + Math.Floor(Fps);
-                    _debugText.Position =
-                        new Vector2f(
-                            _window.GetViewport(_window.GetView()).Width - _debugText.GetLocalBounds().Width - 10, 0f);
-                    _frameCount = 0;
+                    totalTime = 0;
+                    Fps = 1 / deltaTime;
                 }
+                
+                _debugText.DisplayedString = "FPS: " + Math.Floor(Fps);
+                _debugText.Position =
+                    new Vector2f(
+                        _window.GetViewport(_window.GetView()).Width - _debugText.GetLocalBounds().Width - 10, 0f);
 
                 _window.Draw(_debugText);
             }

@@ -15,7 +15,7 @@ namespace ColdFlame.GameSystems
         public override bool IsUnique { get; } = true;
         public override int Priority { get; } = 2;
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             foreach (
                 var inputEvent in

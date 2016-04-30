@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using ColdFlame.Events;
+using SFML.System;
 
 namespace ColdFlame.GameSystems
 {
@@ -9,11 +10,13 @@ namespace ColdFlame.GameSystems
     {
         protected readonly List<Type> ActionableComponents = new List<Type>();
         protected readonly List<Entity> ActionableEntities = new List<Entity>();
+        public readonly Clock TimerClock;
 
         protected GameSystem()
         {
             EntityManager.EntityEvent += OnNotify;
             SystemManager.Add(this);
+            TimerClock = new Clock();
             Console.WriteLine("Added {0} to SystemMananger", GetType().FullName);
         }
 
@@ -50,6 +53,6 @@ namespace ColdFlame.GameSystems
             }
         }
 
-        public abstract void Update();
+        public abstract void Update(float deltaTime);
     }
 }

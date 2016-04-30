@@ -10,25 +10,19 @@ namespace ColdFlame.GameSystems
             ActionableComponents.Add(typeof (Animation));
         }
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             foreach (var e in ActionableEntities)
             {
                 var s = e.GetComponent<Sprite>();
                 var a = e.GetComponent<Animation>();
-                if ((!(a.Clock.ElapsedTime.AsSeconds() > 1/a.FrameRate) && !a.FirstRun) || !a.Play) continue;
+                a.totalDeltaTime += deltaTime;
+                if ((!(a.totalDeltaTime > 1/a.FrameRate) && !a.FirstRun) || !a.Play) continue;
+                a.totalDeltaTime = 0;
                 a.FirstRun = false;
                 var frameCount = a.SpriteList.Count;
-                if (a.CurrentFrame < frameCount - 1)
-                {
-                    a.CurrentFrame++;
-                }
-                else
-                {
-                    a.CurrentFrame = 0;
-                }
+                a.CurrentFrame = (a.CurrentFrame + 1)%frameCount;
                 s.Image = a.SpriteList[a.CurrentFrame];
-                a.Clock.Restart();
             }
         }
     }
