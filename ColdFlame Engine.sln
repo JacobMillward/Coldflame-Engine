@@ -4,16 +4,8 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coldflame Example", "Coldflame Example\Coldflame Example.csproj", "{1C23A2DE-F54B-4464-BD8B-491147D3215E}"
-	ProjectSection(ProjectDependencies) = postProject
-		{B277A5C7-A1E1-46E7-98DC-AC6B4C73C815} = {B277A5C7-A1E1-46E7-98DC-AC6B4C73C815}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Coldflame Engine", "Coldflame Engine\Coldflame Engine.csproj", "{B277A5C7-A1E1-46E7-98DC-AC6B4C73C815}"
-	ProjectSection(ProjectDependencies) = postProject
-		{A4610E4C-DD34-428B-BABB-779CA0B5993A} = {A4610E4C-DD34-428B-BABB-779CA0B5993A}
-	EndProjectSection
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Farseer Physics", "Y:\Projects\Coldflame-Engine\Farseer Physics Engine 3.5\Farseer Physics.csproj", "{A4610E4C-DD34-428B-BABB-779CA0B5993A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,14 +28,6 @@ Global
 		{B277A5C7-A1E1-46E7-98DC-AC6B4C73C815}.Release|Any CPU.ActiveCfg = Release|x86
 		{B277A5C7-A1E1-46E7-98DC-AC6B4C73C815}.Release|x86.ActiveCfg = Release|x86
 		{B277A5C7-A1E1-46E7-98DC-AC6B4C73C815}.Release|x86.Build.0 = Release|x86
-		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Debug|x86.Build.0 = Debug|Any CPU
-		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Release|x86.ActiveCfg = Release|Any CPU
-		{A4610E4C-DD34-428B-BABB-779CA0B5993A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
