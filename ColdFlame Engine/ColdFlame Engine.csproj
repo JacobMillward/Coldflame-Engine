@@ -51,7 +51,7 @@
     <Compile Include="Components\Sprite.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityManager.cs" />
-    <Compile Include="Events\EntityEventType.cs" />
+    <Compile Include="Events\EntityEvent.cs" />
     <Compile Include="GameBase.cs" />
     <Compile Include="GameSystems\GameSystem.cs" />
     <Compile Include="GameSystems\AnimationSystem.cs" />
@@ -88,7 +88,7 @@
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Graphnode.SFML.Net.2.3\build\Graphnode.SFML.Net.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Graphnode.SFML.Net.2.3\build\Graphnode.SFML.Net.targets'))" />
   </Target>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>

@@ -6,7 +6,7 @@ namespace ColdFlame.GameSystems
     {
         public override int Priority { get; } = 19;
 
-        public override void Update()
+        public override void Update(float deltaTime)
         {
             throw new NotImplementedException();
         }
